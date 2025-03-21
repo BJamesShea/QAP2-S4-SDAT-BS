@@ -1,16 +1,37 @@
 package com.keyin.QAP2.model;
 
+import jakarta.persistence.*;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
-
+@Entity
+@Table(name = "members")
 public class Member {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String memberName;
     private String memberAddress;
     private String memberEmail;
     private String memberPhone;
-    private String membershipStartDate;
-    private String membershipDuration;
+    private LocalDate membershipStartDate;
+    private int membershipDuration;
 
-    public Member(String memberName, String memberAddress, String memberEmail, String memberPhone, String membershipStartDate, String membershipDuration) {
+    @ManyToMany
+    @JoinTable(
+            name = "tournament_members",
+            joinColumns = @JoinColumn(name = "member_id"),
+            inverseJoinColumns = @JoinColumn(name = "tournament_id")
+    )
+    private Set<Tournament> tournaments = new HashSet<>();
+
+    public Member() {
+    }
+
+    public Member(String memberName, String memberAddress, String memberEmail, String memberPhone, LocalDate membershipStartDate, int membershipDuration) {
         this.memberName = memberName;
         this.memberAddress = memberAddress;
         this.memberEmail = memberEmail;
@@ -19,50 +40,28 @@ public class Member {
         this.membershipDuration = membershipDuration;
     }
 
-    // Getters
-    public String getMemberName() {
-        return memberName;
-    }
+    // Getters & Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public String getMemberAddress() {
-        return memberAddress;
-    }
+    public String getMemberName() { return memberName; }
+    public void setMemberName(String memberName) { this.memberName = memberName; }
 
-    public String getMemberEmail() {
-        return memberEmail;
-    }
+    public String getMemberAddress() { return memberAddress; }
+    public void setMemberAddress(String memberAddress) { this.memberAddress = memberAddress; }
 
-    public String getMemberPhone() {
-        return memberPhone;
-    }
+    public String getMemberEmail() { return memberEmail; }
+    public void setMemberEmail(String memberEmail) { this.memberEmail = memberEmail; }
 
-    public String getMembershipStartDate() {
-        return membershipStartDate;
-    }
-    public String getMembershipDuration() {
-        return membershipDuration;
-    }
+    public String getMemberPhone() { return memberPhone; }
+    public void setMemberPhone(String memberPhone) { this.memberPhone = memberPhone; }
 
-    //Setters
+    public LocalDate getMembershipStartDate() { return membershipStartDate; }
+    public void setMembershipStartDate(LocalDate membershipStartDate) { this.membershipStartDate = membershipStartDate; }
 
-    public void setMemberName(String memberName) {
-        this.memberName = memberName;
-    }
-    public void setMemberAddress(String memberAddress) {
-        this.memberAddress = memberAddress;
-    }
-    public void setMemberEmail(String memberEmail) {
-        this.memberEmail = memberEmail;
-    }
-    public void setMemberPhone(String memberPhone) {
-        this.memberPhone = memberPhone;
-    }
-    public void setMembershipStartDate(String membershipStartDate) {
-        this.membershipStartDate = membershipStartDate;
-    }
-    public void setMembershipDuration(String membershipDuration) {
-        this.membershipDuration = membershipDuration;
-    }
+    public int getMembershipDuration() { return membershipDuration; }
+    public void setMembershipDuration(int membershipDuration) { this.membershipDuration = membershipDuration; }
 
-
+    public Set<Tournament> getTournaments() { return tournaments; }
+    public void setTournaments(Set<Tournament> tournaments) { this.tournaments = tournaments; }
 }
