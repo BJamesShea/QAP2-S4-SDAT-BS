@@ -1,5 +1,6 @@
 package com.keyin.QAP2.service;
 
+import com.keyin.QAP2.model.Member;
 import com.keyin.QAP2.model.Tournament;
 import com.keyin.QAP2.repository.TournamentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,19 @@ public class TournamentService {
 
     public void deleteTournament(Long id){
         tournamentRepository.deleteById(id);
+    }
+
+    public Tournament assignMemberToTournament(Long tournamentId, Member member){
+        Optional<Tournament> tournamentOpt = tournamentRepository.findById(tournamentId);
+
+        if(tournamentOpt.isPresent()){
+            Tournament tournament = tournamentOpt.get();
+            tournament.getParticipatingMembers().add(member);
+            return tournamentRepository.save(tournament);
+        } else {
+            return null;
+        }
+
     }
 
 }

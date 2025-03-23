@@ -1,5 +1,6 @@
 package com.keyin.QAP2.controller;
 
+import com.keyin.QAP2.model.Member;
 import com.keyin.QAP2.model.Tournament;
 import com.keyin.QAP2.service.TournamentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,14 @@ import java.util.List;
         public void deleteTournament(@PathVariable Long id){
             tournamentService.deleteTournament(id);
         }
+
+        @PostMapping("/{tournamentId}/assign-member")
+        public Tournament assignMemberToTournament(
+                @PathVariable Long tournamentId,
+                @RequestBody Member member) {
+            return tournamentService.assignMemberToTournament(tournamentId, member);
+        }
+
 
     } // end
 
