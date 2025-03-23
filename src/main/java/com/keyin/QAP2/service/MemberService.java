@@ -29,4 +29,23 @@ public class MemberService {
     public void deleteMember(Long id){
         memberRepository.deleteById(id);
     }
+
+    public Member updateMember(Long id, Member updatedMember){
+        Optional<Member> existingMemberOpt = memberRepository.findById(id);
+
+        if(existingMemberOpt.isPresent()) {
+            Member existingMember = existingMemberOpt.get();
+            existingMember.setMemberName(updatedMember.getMemberName());
+            existingMember.setMemberAddress(updatedMember.getMemberAddress());
+            existingMember.setMemberEmail(updatedMember.getMemberEmail());
+            existingMember.setMemberPhone(updatedMember.getMemberPhone());
+            existingMember.setMembershipStartDate(updatedMember.getMembershipStartDate());
+            existingMember.setMembershipDuration(updatedMember.getMembershipDuration());
+
+            return memberRepository.save(existingMember);
+        } else {
+            return null;
+        }
+
+    }
 }
