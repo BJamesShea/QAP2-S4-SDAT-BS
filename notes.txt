@@ -1,0 +1,5 @@
+personal notes;
+
+
+Repositories are INTERFACES that Spring Boot uses to automatically generate CRUD operations for your entities.
+    CRUD = Create, Read, Update, Delete
