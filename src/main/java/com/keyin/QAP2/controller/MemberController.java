@@ -23,6 +23,11 @@ public class MemberController {
         return memberService.getMemberById(id).orElse(null);
     }
 
+    @PostMapping
+    public Member addMember(@RequestBody Member member) {
+        return memberService.addMember(member);
+    }
+
 
 
 
